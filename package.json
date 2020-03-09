@@ -1,0 +1,22 @@
+{
+  "name": "needle-frontend",
+  "version": "1.0.0",
+  "description": "Web application UI for needle exchange",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "needle",
+    "exchange",
+    "kevin",
+    "love"
+  ],
+  "author": "Tyler Lin",
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^2.9.3",
+    "vue": "^2.6.11",
+    "vue-chartkick": "^0.6.0"
+  }
+}
