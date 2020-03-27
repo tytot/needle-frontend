@@ -1,12 +1,12 @@
 <template>
   <div class="home">
-    <h1>Home</h1>
+    <h1>Welcome</h1>
     <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
   </div>
 </template>
 <script>
 export default {
-  name: "home",
+  name: "welcome",
   components: {}
 };
 </script>

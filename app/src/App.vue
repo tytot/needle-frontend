@@ -1,12 +1,27 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <Navigation :key="componentKey"></Navigation>
     <router-view/>
   </div>
 </template>
+
+<script>
+
+import Navigation from './components/Nav'
+export default {
+  name: 'app',
+  components: {
+    'Navigation': Navigation
+  },
+  data() {
+    return {
+      componentKey: 0,
+    };
+  }, beforeUpdate() {
+    this.componentKey += 1;
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
