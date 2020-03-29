@@ -6,6 +6,7 @@ import Admin from '../views/Admin'
 import Login from '../views/Login'
 import Register from '../views/Register'
 import Logout from '../views/Logout'
+import Providers from '../views/Providers'
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,10 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'Welcome',
-      component: Welcome
+      component: Welcome,
+      meta: {
+        guest: true
+      }
     },
     {
       path: '/login',
@@ -31,7 +35,8 @@ const router = new VueRouter({
       name: 'register',
       component: Register,
       meta: {
-        guest: true
+        requiresAuth: true,
+        is_admin: true
       }
     },
     {
@@ -54,6 +59,15 @@ const router = new VueRouter({
       path: '/admin',
       name: 'admin',
       component: Admin,
+      meta: {
+        requiresAuth: true,
+        is_admin: true
+      }
+    },
+    {
+      path: '/providers',
+      name: 'providers',
+      component: Providers,
       meta: {
         requiresAuth: true,
         is_admin: true

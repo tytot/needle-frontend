@@ -10,7 +10,7 @@ export default {
     alert("You have been logged out.")
     localStorage.removeItem("user");
     localStorage.removeItem("jwt");
-    this.$router.push("welcome");
+    this.$router.push({name: 'Welcome'});
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="nav">
     <Navigation :key="componentKey"></Navigation>
     <router-view/>
   </div>
@@ -33,6 +33,7 @@ export default {
 }
 
 #nav {
+  text-align: center;
   padding: 30px;
 
   a {
@@ -43,5 +44,9 @@ export default {
       color: #42b983;
     }
   }
+}
+
+#table {
+  padding: 30px;
 }
 </style>

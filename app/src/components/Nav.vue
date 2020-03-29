@@ -1,11 +1,12 @@
 <template>
   <div>
     <nav v-if="isGuest()">
-      <router-link to="/register">Register</router-link> |
       <router-link to="/login">Login</router-link>
     </nav>
     <nav v-else-if="isAdmin()">
       <router-link to="/admin">Dashboard</router-link> |
+      <router-link to="/providers">Providers</router-link> |
+      <router-link to="/register">Register User</router-link> |
       <router-link to="/logout">Logout</router-link>
     </nav>
     <nav v-else>

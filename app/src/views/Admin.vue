@@ -2,6 +2,7 @@
   <div class="hello">
     <h1>Welcome to administrator page</h1>
     <h2>{{msg}}</h2>
+    <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
   </div>
 </template>
 
