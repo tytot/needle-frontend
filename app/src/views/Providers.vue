@@ -8,7 +8,7 @@
         }"
     />
     <div>
-      <button @click="this.$router.push({name: 'XML'})">Cache</button>
+      <button @click="$router.push({name: 'XML'})">Cache</button>
     </div>
   </div>
 </template>
@@ -18,10 +18,6 @@ export default {
   data() {
     return {
       columns: [
-        {
-          label: "ID",
-          field: "id"
-        },
         {
           label: "Facility",
           field: "facility"
@@ -41,7 +37,11 @@ export default {
         {
           label: "Email",
           field: "email"
-        }
+        },
+        {
+          label: "UUID",
+          field: "uuid"
+        },
       ],
       rows: []
     };

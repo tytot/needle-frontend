@@ -39,7 +39,7 @@ export default {
             <providerDirectory>`;
         for (let contact of data) {
           const csd = `
-                <provider>
+                <provider entityID="urn:uuid:${contact.uuid}">
                     <demographic>
                     <name>
                         <commonName>${contact.last_name}, ${contact.first_name}</commonName>
@@ -61,6 +61,6 @@ export default {
       .catch(function(error) {
         console.error(error.response);
       });
-  },
+  }
 };
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h4>Login</h4>
     <form>
       <label for="email">E-Mail Address</label>
       <div>
