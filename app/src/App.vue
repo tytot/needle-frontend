@@ -49,4 +49,8 @@ export default {
 #table {
   padding: 30px;
 }
+
+#xml {
+  padding: 0px;
+}
 </style>

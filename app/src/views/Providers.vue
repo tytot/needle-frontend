@@ -7,17 +7,54 @@
             enabled: true
         }"
     />
+    <div>
+      <button @click="this.$router.push({name: 'XML'})">Cache</button>
+    </div>
   </div>
 </template>
 
 <script>
-import { columns, rows } from '../directory.js'
 export default {
   data() {
     return {
-      columns: columns,
-      rows: rows,
+      columns: [
+        {
+          label: "ID",
+          field: "id"
+        },
+        {
+          label: "Facility",
+          field: "facility"
+        },
+        {
+          label: "Last Name",
+          field: "last_name"
+        },
+        {
+          label: "First Name",
+          field: "first_name"
+        },
+        {
+          label: "Phone #",
+          field: "phone"
+        },
+        {
+          label: "Email",
+          field: "email"
+        }
+      ],
+      rows: []
     };
+  },
+  created() {
+    this.$http
+      .get("http://localhost:3000/providers")
+      .then(response => {
+        this.rows = response.data;
+      })
+      .catch(function(error) {
+        console.error(error.response);
+      });
   }
 };
 </script>

@@ -22,7 +22,7 @@ class ProviderDB {
     selectByEmail(email, callback) {
         return this.db.get(
             `SELECT * FROM provider WHERE "email" = "${email}"`,
-            [email],function(err,row){
+            function(err,row){
                 callback(err,row)
             })
     }
@@ -30,7 +30,7 @@ class ProviderDB {
     selectByPhone(phone, callback) {
         return this.db.get(
             `SELECT * FROM provider WHERE "phone" = "${phone}"`,
-            [phone],function(err,row){
+            function(err,row){
                 callback(err,row)
             })
     }

@@ -21,7 +21,7 @@ class UserDB {
     selectByEmail(email, callback) {
         return this.db.get(
             `SELECT * FROM user WHERE "email" = "${email}"`,
-            [email],function(err,row){
+            function(err,row){
                 callback(err,row)
             })
     }
