@@ -1,7 +1,7 @@
 "use strict";
 const sqlite3 = require('sqlite3').verbose();
 
-class DB {
+class UserDB {
     constructor(file) {
         this.db = new sqlite3.Database(file);
         this.createTable()
@@ -20,7 +20,7 @@ class DB {
 
     selectByEmail(email, callback) {
         return this.db.get(
-            `SELECT * FROM user WHERE email = ?`,
+            `SELECT * FROM user WHERE "email" = "${email}"`,
             [email],function(err,row){
                 callback(err,row)
             })
@@ -49,4 +49,4 @@ class DB {
     }
 }
 
-module.exports = DB
+module.exports = UserDB
