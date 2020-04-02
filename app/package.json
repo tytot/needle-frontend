@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
+    "phone": "^2.4.8",
     "sqlite-json": "^1.1.0",
     "uuid": "^7.0.3",
+    "uuid-validate": "0.0.3",
     "vkbeautify": "^0.99.3",
     "vue": "^2.6.11",
+    "vue-form-generator": "^2.3.4",
     "vue-good-table": "^2.19.1",
     "vue-router": "^3.1.5"
   },

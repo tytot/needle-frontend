@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <Navigation v-if="$route.name != 'XML'" :key="componentKey"></Navigation>
+    <navigation v-if="$route.name != 'XML'" :key="componentKey"></navigation>
     <router-view/>
   </div>
 </template>
@@ -11,7 +11,7 @@ import Navigation from './components/Nav'
 export default {
   name: 'app',
   components: {
-    'Navigation': Navigation
+    'navigation': Navigation
   },
   data() {
     return {

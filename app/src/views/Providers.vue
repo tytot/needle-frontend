@@ -1,6 +1,9 @@
 <template>
-  <div id="table">
+  <div>
+    <add-provider @refresh="load"/>
     <vue-good-table
+      id="table"
+      :key="componentKey"
       :columns="columns"
       :rows="rows"
       :search-options="{
@@ -14,9 +17,14 @@
 </template>
 
 <script>
+import addProvider from '../components/AddProvider'
 export default {
+  components: {
+    'add-provider': addProvider
+  },
   data() {
     return {
+      componentKey: 0,
       columns: [
         {
           label: "Facility",
@@ -41,7 +49,7 @@ export default {
         {
           label: "UUID",
           field: "uuid"
-        },
+        }
       ],
       rows: []
     };
@@ -55,6 +63,19 @@ export default {
       .catch(function(error) {
         console.error(error.response);
       });
+  },
+  methods: {
+    load() {
+      this.$http
+      .get("http://localhost:3000/providers")
+      .then(response => {
+        this.rows = response.data;
+        this.componentKey += 1;
+      })
+      .catch(function(error) {
+        console.error(error.response);
+      });
+    }
   }
 };
 </script>
