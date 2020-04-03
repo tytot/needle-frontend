@@ -1,6 +1,7 @@
 <template>
   <div>
     <add-provider @refresh="load"/>
+    <delete-provider @refresh="load"/>
     <vue-good-table
       id="table"
       :key="componentKey"
@@ -18,9 +19,11 @@
 
 <script>
 import addProvider from '../components/AddProvider'
+import deleteProvider from '../components/DeleteProvider'
 export default {
   components: {
-    'add-provider': addProvider
+    'add-provider': addProvider,
+    'delete-provider': deleteProvider
   },
   data() {
     return {

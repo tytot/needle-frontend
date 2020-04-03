@@ -16,7 +16,7 @@ const validate = require("uuid-validate");
 export default {
   data() {
     return {
-      key: 0,
+      toggle: 0,
       add: false,
       model: {
         uuid: "",
@@ -89,7 +89,7 @@ export default {
         ],
 
         formOptions: {
-          fieldIdPrefix: "provider-"
+          fieldIdPrefix: "provider-",
         }
       }
     };
@@ -104,7 +104,6 @@ export default {
         phone: phone(this.model.phone, "USA")[0]
       };
       if (this.model.uuid != "") options.uuid = this.model.uuid;
-      if (this.model.email == "") this.model.email = "N/A";
       else options.email = this.model.email;
       this.$http
         .post(url, options)
@@ -117,6 +116,7 @@ export default {
             email: "",
             phone: ""
           };
+          alert('Success!');
           this.add = false;
           this.toggle += 1;
           this.$emit("refresh");

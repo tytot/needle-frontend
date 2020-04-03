@@ -16,7 +16,7 @@ class ProviderDB {
                 first_name text,
                 phone text UNIQUE,
                 email text UNIQUE)`
-        return this.db.run(sql);
+        return this.db.run(sql)
     }
 
     selectByUUID(uuid, callback) {
@@ -66,7 +66,7 @@ class ProviderDB {
     }
 
     insert(provider, callback) {
-        console.log(provider)
+        console.log("Adding " + provider)
         return this.db.run(
             `INSERT INTO provider (uuid, facility, last_name, first_name, phone, email) VALUES (?,?,?,?,?,?)`,
             provider, (err) => {
@@ -74,9 +74,9 @@ class ProviderDB {
             })
     }
 
-    delete(email, callback) {
+    delete(uuid, callback) {
         return this.db.run(
-            `DELETE FROM provider WHERE "email" = "${email}"`,
+            `DELETE FROM provider WHERE "uuid" = "${uuid}"`,
             function (err, row) {
                 callback(err, row)
             })

@@ -84,6 +84,14 @@ router.get('/providers', function (req, res) {
     })
 });
 
+router.get('/providers/:uuid', function (req, res) {
+    providerDB.selectByUUID(req.params.uuid, (err, user) => {
+        if (err) return res.status(500).send('An error occurred.');
+        if (!user) return res.status(404).send('UUID does not match any provider.');
+        res.status(200).send({ user: user });
+    });
+});
+
 router.post('/add-provider', function (req, res) {
     if (!req.body.uuid)
         req.body.uuid = uuidv4()
@@ -102,7 +110,7 @@ router.post('/add-provider', function (req, res) {
 });
 
 router.post('/remove-provider', function (req, res) {
-    providerDB.delete([req.body.email],
+    providerDB.delete([req.body.uuid],
         function (err) {
             if (err) return res.status(500).send(err)
             res.status(200).send('Success!')
