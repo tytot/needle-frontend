@@ -1,6 +1,6 @@
 <template>
   <div id="nav">
-    <navigation v-if="$route.name != 'XML'" :key="componentKey"></navigation>
+    <navigation :key="componentKey"></navigation>
     <router-view/>
   </div>
 </template>

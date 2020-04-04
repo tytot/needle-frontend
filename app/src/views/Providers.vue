@@ -12,7 +12,7 @@
         }"
     />
     <div>
-      <button @click="$router.push({name: 'XML'})">Cache</button>
+      <button @click="navigate">Cache</button>
     </div>
   </div>
 </template>
@@ -78,6 +78,9 @@ export default {
       .catch(function(error) {
         console.error(error.response);
       });
+    },
+    navigate() {
+      window.open('http://localhost:3000/XML', '_blank');
     }
   }
 };

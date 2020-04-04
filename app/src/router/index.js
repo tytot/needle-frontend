@@ -7,7 +7,6 @@ import Login from '../views/Login'
 import Register from '../views/Register'
 import Logout from '../views/Logout'
 import Providers from '../views/Providers'
-import XML from '../views/XML'
 
 Vue.use(VueRouter)
 
@@ -73,16 +72,7 @@ const router = new VueRouter({
         requiresAuth: true,
         is_admin: true
       }
-    },
-    {
-      path: '/xml',
-      name: 'XML',
-      component: XML,
-      meta: {
-        requiresAuth: true,
-        is_admin: true
-      }
-    },
+    }
   ]
 })
 
