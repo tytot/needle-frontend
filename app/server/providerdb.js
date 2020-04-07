@@ -15,7 +15,7 @@ class ProviderDB {
                 last_name text,
                 first_name text,
                 phone text UNIQUE,
-                email text UNIQUE)`
+                email text)`
         return this.db.run(sql)
     }
 

@@ -92,11 +92,10 @@ router.get('/providers/:uuid', function (req, res) {
     });
 });
 
-router.get('/XML', function (req, res) {
+router.post('/query', function (req, res) {
     exporter.json('select * FROM provider', (err, json) => {
         if (err) return res.status(500).send(err)
-        let cache = `<?xml version="1.0" encoding="UTF-8"?>
-        <CSD xmlns="urn:ihe:iti:csd:2013" xmlns:csd="urn:ihe:iti:csd:2013">
+        let cache = `<CSD xmlns="urn:ihe:iti:csd:2013" xmlns:csd="urn:ihe:iti:csd:2013">
             <organizationDirectory/>
             <serviceDirectory/>
             <facilityDirectory/>
@@ -120,8 +119,24 @@ router.get('/XML', function (req, res) {
         cache = cache.concat(`
             </providerDirectory>
         </CSD>`)
-        res.type('application/xml')
-        return res.status(200).send(cache)
+
+        let soap = `<soap:Envelope 
+            xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
+            xmlns:wsa="http://www.w3.org/2005/08/addressing" 
+            xmlns:csd="urn:ihe:iti:csd:2013"> 
+            <soap:Header>
+            <wsa:Action soap:mustUnderstand="1" >urn:ihe:iti:csd:2013:GetDirectoryModificationsResponse</wsa:Action>
+            <wsa:MessageID>urn:uuid:{random:uuid()}</wsa:MessageID>
+            <wsa:To soap:mustUnderstand="1">http://www.w3.org/2005/08/addressing/anonymous</wsa:To> 
+            </soap:Header>
+            <soap:Body>
+            <csd:getModificationsResponse>
+                ${cache}
+            </csd:getModificationsResponse>
+            </soap:Body>
+        </soap:Envelope>`
+        res.type('application/soap+xml')
+        res.status(200).send(soap)
     })
 });
 
@@ -137,7 +152,11 @@ router.post('/add-provider', function (req, res) {
         req.body.email
     ],
         function (err) {
-            if (err) return res.status(500).send(err)
+            if (err) {
+                console.log(err)
+                return res.status(500).send(err)
+            }
+            console.log('Success.')
             res.status(200).send('Success!')
         });
 });
