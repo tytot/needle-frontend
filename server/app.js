@@ -92,6 +92,38 @@ router.get('/providers/:uuid', function (req, res) {
     });
 });
 
+router.get('/XML', function (req, res) {
+    exporter.json('select * FROM provider', (err, json) => {
+        if (err) return res.status(500).send(err)
+        let cache = `<CSD xmlns="urn:ihe:iti:csd:2013" xmlns:csd="urn:ihe:iti:csd:2013">
+            <organizationDirectory/>
+            <serviceDirectory/>
+            <facilityDirectory/>
+            <providerDirectory>`
+        for (let contact of JSON.parse(json)) {
+            const csd = `
+                <provider entityID="urn:uuid:${contact.uuid}">
+                    <demographic>
+                    <name>
+                        <commonName>${contact.last_name}, ${contact.first_name}</commonName>
+                        <forename>${contact.first_name}</forename>
+                        <surname>${contact.last_name}</surname>
+                    </name>
+                    <contactPoint>
+                        <codedType code="BP" codingScheme="urn:ihe:iti:csd:2013:contactPoint">${contact.phone}</codedType>
+                    </contactPoint>
+                    </demographic>
+                </provider>`
+            cache = cache.concat(csd)
+        }
+        cache = cache.concat(`
+            </providerDirectory>
+        </CSD>`)
+        res.type('application/xml')
+        res.status(200).send(cache)
+    })
+})
+
 router.post('/query', function (req, res) {
     exporter.json('select * FROM provider', (err, json) => {
         if (err) return res.status(500).send(err)
