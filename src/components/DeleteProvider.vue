@@ -1,16 +1,42 @@
 <template>
   <div :key="toggle">
-    <div v-if="!drop">
-      <button @click="drop=true">Delete Provider</button>
+    <div v-if="!drop" class="d-flex justify-content-center mt-2">
+      <b-button variant="light" @click="drop=true">Delete Provider</b-button>
     </div>
     <div v-if="drop">
-      <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-      <button @click="drop=false">Cancel</button>
+      <b-container>
+        <b-card class="my-2" title="Delete Provider" bg-variant="light">
+          <b-form @submit="handleSubmit">
+            <b-form-group
+              id="add-uuid-group"
+              label="UUID:"
+              label-for="add-uuid">
+              <b-form-input
+                id="add-uuid"
+                v-model="model.uuid"
+                :state="validateUUID"
+                required
+                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+              ></b-form-input>
+              <b-form-invalid-feedback :state="validateUUID">
+                Please input a valid UUID.
+              </b-form-invalid-feedback>
+            </b-form-group>
+            <b-row class="d-flex justify-content-center">
+              <b-button type="submit" variant="success">Submit</b-button>
+            </b-row>
+            <b-row class="d-flex justify-content-center mt-2">
+              <b-button variant="danger" @click="drop=false">Cancel</b-button>
+            </b-row>
+          </b-form>
+        </b-card>
+      </b-container>
     </div>
   </div>
 </template>
 
 <script>
+const validate = require("uuid-validate");
 export default {
   data() {
     return {
@@ -19,34 +45,11 @@ export default {
       model: {
         uuid: ""
       },
-      schema: {
-        groups: [
-          {
-            legend: "Provider Details",
-            fields: [
-              {
-                type: "input",
-                inputType: "text",
-                label: "UUID",
-                model: "uuid"
-              },
-              {
-                type: "submit",
-                buttonText: "Submit",
-                onSubmit: this.handleSubmit
-              }
-            ]
-          }
-        ],
-
-        formOptions: {
-          fieldIdPrefix: "provider-"
-        }
-      }
     };
   },
   methods: {
-    handleSubmit() {
+    handleSubmit(e) {
+      e.preventDefault();
       let url = `http://localhost:3000/providers/${this.model.uuid}`;
       this.$http
         .get(url)
@@ -63,7 +66,7 @@ export default {
                   uuid: ""
                 };
                 alert("Success!");
-                this.delete = false;
+                this.drop = false;
                 this.toggle += 1;
                 this.$emit("refresh");
               })
@@ -76,6 +79,12 @@ export default {
         .catch(() => {
           alert("No user was found with that UUID.");
         });
+    }
+  },
+  computed: {
+    validateUUID() {
+      if (validate(this.model.uuid)) return true;
+      return false;
     }
   }
 };

@@ -1,18 +1,26 @@
 <template>
   <div>
-    <nav v-if="isGuest()">
-      <router-link to="/login">Login</router-link>
-    </nav>
-    <nav v-else-if="isAdmin()">
-      <router-link to="/admin">Dashboard</router-link> |
-      <router-link to="/providers">Providers</router-link> |
-      <router-link to="/register">Register User</router-link> |
-      <router-link to="/logout">Logout</router-link>
-    </nav>
-    <nav v-else>
-      <router-link to="/userboard">Dashboard</router-link> |
-      <router-link to="/logout">Logout</router-link>
-    </nav>
+    <b-navbar toggleable="lg" type="light" variant="info">
+      <b-container>
+          <b-navbar-brand href="#">N.E.S. 1.0</b-navbar-brand>
+          <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+          <b-collapse id="nav-collapse" is-nav>
+            <b-navbar-nav v-if="isGuest()">
+              <b-nav-item to="/login">Login</b-nav-item>
+            </b-navbar-nav>
+            <b-navbar-nav v-else-if="isAdmin()">
+              <b-nav-item to="/admin">Dashboard</b-nav-item>
+              <b-nav-item to="/providers">Providers</b-nav-item>
+              <b-nav-item to="/register">Register User</b-nav-item>
+              <b-nav-item to="/logout">Logout</b-nav-item>
+            </b-navbar-nav>
+            <b-navbar-nav v-else>
+              <b-nav-item to="/dashboard">Dashboard</b-nav-item>
+              <b-nav-item to="/logout">Logout</b-nav-item>
+            </b-navbar-nav>
+          </b-collapse>
+        </b-container>
+    </b-navbar>
   </div>
 </template>
 

@@ -36,7 +36,7 @@ const router = new VueRouter({
       component: Register,
       meta: {
         requiresAuth: true,
-        is_admin: true
+        is_admin: true,
       }
     },
     {

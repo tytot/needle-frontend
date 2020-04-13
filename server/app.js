@@ -34,8 +34,8 @@ router.post('/register', function (req, res) {
         bcrypt.hashSync(req.body.password, 8)
     ],
         function (err) {
-            if (err) return res.status(500).send(err)
-            userDB.selectByEmail(req.body.email, (err, user) => {
+            if (err) return res.status(500).send(err);
+            userDB.selectByName(req.body.name, (err, user) => {
                 if (err) return res.status(500).send(err)
                 let token = jwt.sign({ id: user.id }, config.secret, {
                     expiresIn: 86400 // expires in 24 hours
@@ -53,8 +53,8 @@ router.post('/register-admin', function (req, res) {
         1
     ],
         function (err) {
-            if (err) return res.status(500).send(err)
-            userDB.selectByEmail(req.body.email, (err, user) => {
+            if (err) return res.status(500).send(err);
+            userDB.selectByName(req.body.name, (err, user) => {
                 if (err) return res.status(500).send(err)
                 let token = jwt.sign({ id: user.id }, config.secret, {
                     expiresIn: 86400 // expires in 24 hours
@@ -65,7 +65,7 @@ router.post('/register-admin', function (req, res) {
 });
 
 router.post('/login', (req, res) => {
-    userDB.selectByEmail(req.body.email, (err, user) => {
+    userDB.selectByName(req.body.name, (err, user) => {
         if (err) return res.status(500).send(err);
         if (!user) return res.status(404).send('No user found.');
         let passwordIsValid = bcrypt.compareSync(req.body.password, user.user_pass);

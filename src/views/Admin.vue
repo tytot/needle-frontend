@@ -1,34 +1,18 @@
 <template>
   <div class="hello">
-    <h1>Welcome to administrator page</h1>
-    <h2>{{msg}}</h2>
-    <column-chart :data="[['Sun', 32], ['Mon', 46], ['Tue', 28]]"></column-chart>
+    <h1 class="my-4 d-flex justify-content-center">Admin Dashboard</h1>
+    <Data/>
   </div>
 </template>
 
 <script>
+import Data from '../components/Data.vue'
 export default {
+  components: {
+    Data
+  },
   data() {
-    return {
-      msg: "The superheros"
-    };
+    return {};
   }
 };
 </script>
-<style scoped>
-h1,
-h2 {
-  font-weight: normal;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

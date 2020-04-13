@@ -1,11 +1,77 @@
 <template>
   <div :key="toggle">
-    <div v-if="!add">
-      <button @click="add=true">Add Provider</button>
+    <div v-if="!add" class="d-flex justify-content-center mt-2">
+      <b-button variant="light" @click="add=true">Add Provider</b-button>
     </div>
     <div v-if="add">
-      <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-      <button @click="add=false">Cancel</button>
+      <b-container>
+        <b-card class="mt-2" title="Add Provider" bg-variant="light">
+          <b-form @submit="handleSubmit">
+            <b-form-group
+              id="add-uuid-group"
+              label="UUID:"
+              label-for="add-uuid"
+              description="If left blank, one will be generated.">
+              <b-form-input
+                id="add-uuid"
+                v-model="model.uuid"
+                :state="validateUUID"
+                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+              ></b-form-input>
+              <b-form-invalid-feedback :state="validateUUID">
+                Please input a valid UUID.
+              </b-form-invalid-feedback>
+            </b-form-group>
+            <b-form-group id="add-fn-group" label="First Name:" label-for="add-fn">
+              <b-form-input
+                id="add-fn"
+                v-model="model.first_name"
+                required
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group id="add-ln-group" label="Last Name:" label-for="add-ln">
+              <b-form-input
+                id="add-ln"
+                v-model="model.last_name"
+                required
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group id="add-facility-group" label="Facility:" label-for="add-facility">
+              <b-form-select
+                id="add-facility"
+                v-model="model.facility"
+                :options="facilities"
+                required
+              ></b-form-select>
+            </b-form-group>
+            <b-form-group id="add-phone-group" label="Phone Number:" label-for="add-phone">
+              <b-form-input
+                id="add-phone"
+                v-model="model.phone"
+                :state="validatePhone"
+                required
+                placeholder="+XXXXXXXXXXX"
+              ></b-form-input>
+              <b-form-invalid-feedback :state="validatePhone">
+                Please input a valid phone number.
+              </b-form-invalid-feedback>
+            </b-form-group>
+            <b-form-group id="add-email-group" label="Email:" label-for="add-email">
+              <b-form-input
+                id="add-email"
+                v-model="model.email"
+                type="email"
+              ></b-form-input>
+            </b-form-group>
+            <b-row class="d-flex justify-content-center">
+              <b-button type="submit" variant="success">Submit</b-button>
+            </b-row>
+            <b-row class="d-flex justify-content-center mt-2">
+              <b-button variant="danger" @click="add=false">Cancel</b-button>
+            </b-row>
+          </b-form>
+        </b-card>
+      </b-container>
     </div>
   </div>
 </template>
@@ -22,80 +88,16 @@ export default {
         uuid: "",
         first_name: "",
         last_name: "",
-        facility: "EC",
+        facility: "",
         email: "",
         phone: ""
       },
-      schema: {
-        groups: [
-          {
-            legend: "Provider Details",
-            fields: [
-              {
-                type: "input",
-                inputType: "text",
-                label: "UUID (If left blank, one will be generated.)",
-                model: "uuid",
-                validator: this.validateUUID
-              },
-              {
-                type: "input",
-                inputType: "text",
-                label: "First Name",
-                model: "first_name",
-                featured: true,
-                required: true,
-                validator: "string"
-              },
-              {
-                type: "input",
-                inputType: "text",
-                label: "Last Name",
-                model: "last_name",
-                featured: true,
-                required: true,
-                validator: "string"
-              },
-              {
-                type: "select",
-                label: "Facility",
-                model: "facility",
-                values: ["EC", "Columbia"],
-                required: true
-              },
-              {
-                type: "input",
-                inputType: "text",
-                label: "Phone Number",
-                model: "phone",
-                required: true,
-                validator: this.validatePhone
-              },
-              {
-                type: "input",
-                inputType: "email",
-                label: "E-mail (Optional)",
-                model: "email",
-                validator: "email"
-              },
-              {
-                type: "submit",
-                buttonText: "Submit",
-                onSubmit: this.handleSubmit,
-                validateBeforeSubmit: true
-              }
-            ]
-          }
-        ],
-
-        formOptions: {
-          fieldIdPrefix: "provider-",
-        }
-      }
-    };
+      facilities: ['Ellicott City', 'Columbia'],
+    }
   },
   methods: {
-    handleSubmit() {
+    handleSubmit(e) {
+      e.preventDefault();
       let url = "http://localhost:3000/add-provider";
       let options = {
         last_name: this.model.last_name,
@@ -112,7 +114,7 @@ export default {
             uuid: "",
             first_name: "",
             last_name: "",
-            facility: "EC",
+            facility: "",
             email: "",
             phone: ""
           };
@@ -125,13 +127,15 @@ export default {
           alert(error);
         });
     },
-    validateUUID(value) {
-      if (this.model.uuid == "" || validate(value)) return [];
-      return ["Invalid UUID!"];
+  },
+  computed: {
+    validateUUID() {
+      if (this.model.uuid == "" || validate(this.model.uuid)) return true;
+      return false;
     },
-    validatePhone(value) {
-      if (phone(value, "USA").length === 0) return ["Invalid phone number!"];
-      return [];
+    validatePhone() {
+      if (phone(this.model.phone, "USA").length === 0) return false;
+      return true;
     }
   }
 };

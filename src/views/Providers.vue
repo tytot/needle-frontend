@@ -1,8 +1,11 @@
 <template>
   <div>
-    <add-provider @refresh="load"/>
+    <add-provider class="mx-auto" @refresh="load"/>
     <delete-provider @refresh="load"/>
-    <vue-good-table
+    <div class="d-flex justify-content-center my-2">
+      <b-button variant="light" @click="navigate">Cache</b-button>
+    </div>
+    <vue-good-table class="px-4"
       id="table"
       :key="componentKey"
       :columns="columns"
@@ -11,9 +14,6 @@
             enabled: true
         }"
     />
-    <div>
-      <button @click="navigate">Cache</button>
-    </div>
   </div>
 </template>
 

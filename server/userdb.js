@@ -11,16 +11,16 @@ class UserDB {
         const sql = `
             CREATE TABLE IF NOT EXISTS user (
                 id integer PRIMARY KEY,
-                name text,
+                name text UNIQUE,
                 email text UNIQUE,
                 user_pass text,
                 is_admin integer)`
         return this.db.run(sql);
     }
 
-    selectByEmail(email, callback) {
+    selectByName(name, callback) {
         return this.db.get(
-            `SELECT * FROM user WHERE "email" = "${email}"`,
+            `SELECT * FROM user WHERE "name" = "${name}"`,
             function(err,row){
                 callback(err,row)
             })
