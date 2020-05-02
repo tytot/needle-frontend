@@ -6,6 +6,12 @@
     <div v-if="add">
       <b-container>
         <b-card class="mt-2" title="Add Provider" bg-variant="light">
+          <b-alert v-model="showSuccess" variant="success" dismissible>
+            Success!
+          </b-alert>
+          <b-alert v-model="showDanger" variant="danger" dismissible>
+            An error occurred.
+          </b-alert>
           <b-form @submit="handleSubmit">
             <b-form-group
               id="add-uuid-group"
@@ -93,6 +99,8 @@ export default {
         phone: ""
       },
       facilities: ['Ellicott City', 'Columbia'],
+      showSuccess: false,
+      showDanger: false,
     }
   },
   methods: {
@@ -118,15 +126,21 @@ export default {
             email: "",
             phone: ""
           };
-          alert('Success!');
-          this.add = false;
-          this.toggle += 1;
+          this.showSuccessAlert();
+          // this.toggle += 1;
           this.$emit("refresh");
         })
-        .catch(error => {
-          alert(error);
+        .catch(() => {
+          this.showErrorAlert();
         });
     },
+    showSuccessAlert() {
+      this.showDanger = false;
+      this.showSuccess = true;
+    },
+    showErrorAlert() {
+      this.showDanger = true;
+    }
   },
   computed: {
     validateUUID() {

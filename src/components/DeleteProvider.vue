@@ -6,6 +6,12 @@
     <div v-if="drop">
       <b-container>
         <b-card class="my-2" title="Delete Provider" bg-variant="light">
+          <b-alert v-model="showSuccess" variant="success" dismissible>
+            Success!
+          </b-alert>
+          <b-alert v-model="showDanger" variant="danger" dismissible>
+            An error occurred.
+          </b-alert>
           <b-form @submit="handleSubmit">
             <b-form-group
               id="add-uuid-group"
@@ -45,6 +51,8 @@ export default {
       model: {
         uuid: ""
       },
+      showSuccess: false,
+      showDanger: false,
     };
   },
   methods: {
@@ -65,20 +73,28 @@ export default {
                 this.model = {
                   uuid: ""
                 };
-                alert("Success!");
-                this.drop = false;
-                this.toggle += 1;
+                this.showSuccessAlert();
+                //this.toggle += 1;
                 this.$emit("refresh");
               })
-              .catch(error => {
-                alert(error);
+              .catch(() => {
+                this.showErrorAlert();
               });
           }
-          else alert("No user was found with that UUID.");
+          else {
+            this.showErrorAlert();
+          }
         })
         .catch(() => {
-          alert("No user was found with that UUID.");
+          this.showErrorAlert();
         });
+    },
+    showSuccessAlert() {
+      this.showDanger = false;
+      this.showSuccess = true;
+    },
+    showErrorAlert() {
+      this.showDanger = true;
     }
   },
   computed: {

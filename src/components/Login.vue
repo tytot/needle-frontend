@@ -38,7 +38,6 @@ export default {
   },
   methods: {
     handleSubmit(e) {
-      this.showDismissibleAlert=true;
       e.preventDefault();
       if (this.password.length > 0) {
         this.$http
@@ -64,11 +63,14 @@ export default {
               }
             }
           })
-          .catch(function(error) {
-            console.log(error);
+          .catch(() => {
+            this.showAlert()
           });
       }
     },
+    showAlert() {
+      this.showDismissibleAlert = true;
+    }
   },
 };
 </script>

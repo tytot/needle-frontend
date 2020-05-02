@@ -1,12 +1,16 @@
 <template>
   <div>
     <h1 class="mt-4 d-flex justify-content-center">Welcome</h1>
+    <login></login>
   </div>
 </template>
 <script>
+import Login from '../components/Login';
 export default {
   name: "welcome",
-  components: {}
+  components: {
+    'login': Login
+  }
 };
 </script>
 <style scoped>

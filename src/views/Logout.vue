@@ -1,16 +1,23 @@
 <template>
   <div>
-    <h1>You have been logged out.</h1>
+    <b-alert show variant="info" class="m-3">
+      <h4 class="alert-heading">You have been successfuly logged out.</h4>
+      <hr>
+      <b-button class="mx-auto" variant="success" @click="goHome()">To Home Page</b-button>
+    </b-alert>
   </div>
 </template>
 <script>
 export default {
   data() { return {} },
   mounted() {
-    alert("You have been logged out.")
     localStorage.removeItem("user");
     localStorage.removeItem("jwt");
-    this.$router.push({name: 'Welcome'});
+  },
+  methods: {
+    goHome() {
+      this.$router.push({name: 'Welcome'});
+    }
   }
 };
 </script>

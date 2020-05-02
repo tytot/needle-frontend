@@ -3,7 +3,6 @@ import VueRouter from 'vue-router'
 import Welcome from '../views/Welcome.vue'
 import UserBoard from '../views/UserBoard'
 import Admin from '../views/Admin'
-import Login from '../views/Login'
 import Register from '../views/Register'
 import Logout from '../views/Logout'
 import Providers from '../views/Providers'
@@ -18,14 +17,6 @@ const router = new VueRouter({
       path: '/',
       name: 'Welcome',
       component: Welcome,
-      meta: {
-        guest: true
-      }
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
       meta: {
         guest: true
       }
@@ -80,7 +71,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (localStorage.getItem('jwt') == null) {
       next({
-        path: '/login',
+        path: '/',
         params: { nextUrl: to.fullPath }
       })
     } else {
